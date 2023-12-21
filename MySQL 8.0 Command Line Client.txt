@@ -1,0 +1,978 @@
+Enter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 55
+Server version: 8.0.35 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> SHOW databases
+    -> SHOW databases
+    -> SHOW databases;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SHOW databases
+SHOW databases' at line 2
+mysql> SHOW databases;
++--------------------+
+| Database           |
++--------------------+
+| foodly             |
+| information_schema |
+| mydatabase         |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| titanicdatabase    |
+| world              |
++--------------------+
+9 rows in set (0.01 sec)
+
+mysql> USE foodly;
+Database changed
+mysql> DROP TABLE IF EXISTS `aliment`;
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+mysql> CREATE TABLE `aliment` (
+    ->   `id` int NOT NULL AUTO_INCREMENT,
+    ->   `nom` varchar(100) NOT NULL,
+    ->   `marque` varchar(100) DEFAULT NULL,
+    ->   `sucre` float DEFAULT NULL,
+    ->   `calories` int NOT NULL,
+    ->   `graisses` float DEFAULT NULL,
+    ->   `proteines` float DEFAULT NULL,
+    ->   `bio` tinyint(1) DEFAULT '0',
+    ->   PRIMARY KEY (`id`)
+    -> ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+Query OK, 0 rows affected, 1 warning (0.05 sec)
+
+mysql> LOCK TABLES `aliment` WRITE;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> INSERT INTO `aliment` VALUES (1,'pomme','sans marque',19.1,72,0.2,0.4,0),(2,'poire','sans marque',27.5,134,0.2,1.1,1),(3,'banane','chiquita',24,101,0.3,1.1,0),(4,'jambon','herta',0.2,34,0.8,6.6,0),(5,'compote','andros',11,51,0,0.5,0),(6,'steak haché','charal',0.8,68,4.8,4.8,0),(7,'saumon','guyader',0,206,12.3,22.1,0),(8,'haricots verts','bonduelle',5.8,25,0.1,1.5,0),(9,'riz','oncle benz',28.2,130,0.3,2.7,0),(10,'pâtes completes','barilla',64,353,2.7,14,1),(11,'blanc de dinde','père dodu',0.6,98,0.9,22,0),(12,'filet de poulet','le gaulois',0,121,1.8,26.2,0),(13,'muesli','bjorg',26.5,170,5,3.5,1),(14,'café','carte noire',0,0,0,0,0),(15,'jus d\'orange','innocent',16,74,0,1.6,0),(16,'jus de pomme','andros',24,100,0.2,0.2,1),(17,'pomme de terre','doréac',21.1,104,0.2,2.8,0),(18,'oeuf','naturalia',0.4,74,5.1,6.5,1),(19,'baguette','sans marque',36.1,185,1.2,7.5,0),(20,'lait d\'amande','bjorg',6.1,80,5.3,1.5,1);
+Query OK, 20 rows affected (0.02 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+mysql> UNLOCK TABLES;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> DROP TABLE IF EXISTS `utilisateur`;
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+mysql> CREATE TABLE `utilisateur` (
+    ->   `id` int NOT NULL AUTO_INCREMENT,
+    ->   `nom` varchar(100) DEFAULT NULL,
+    ->   `prenom` varchar(100) DEFAULT NULL,
+    ->   `email` varchar(255) NOT NULL,
+    ->   PRIMARY KEY (`id`),
+    ->   UNIQUE KEY `email` (`email`)
+    -> ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> LOCK TABLES `utilisateur` WRITE;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> INSERT INTO `utilisateur` VALUES (1,'durantay','quentin','qentin@gmail.com'),(2,'dupont','marie','marie@hotmail.fr'),(3,'miller','vincent','vm@yahoo.com'),(4,'zuckerberg','marc','marc@gmail.com'),(5,'paul','pierre','pp@orange.fr'),(6,'de vauclerc','lisa','lisadv@gmail.com'),(7,'gluntig','éléonore','glunt@sfr.com'),(8,'cavill','henry','henry@outlook.fr'),(9,'hopper','lionel','hpp@gmail.com'),(10,'tember','fabienne','fabienne@yopmail.com');
+Query OK, 10 rows affected (0.02 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> UNLOCK TABLES;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SHOW tables;
++------------------+
+| Tables_in_foodly |
++------------------+
+| aliment          |
+| utilisateur      |
++------------------+
+2 rows in set (0.01 sec)
+
+mysql> DESCRIBE aliment;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| id        | int          | NO   | PRI | NULL    | auto_increment |
+| nom       | varchar(100) | NO   |     | NULL    |                |
+| marque    | varchar(100) | YES  |     | NULL    |                |
+| sucre     | float        | YES  |     | NULL    |                |
+| calories  | int          | NO   |     | NULL    |                |
+| graisses  | float        | YES  |     | NULL    |                |
+| proteines | float        | YES  |     | NULL    |                |
+| bio       | tinyint(1)   | YES  |     | 0       |                |
++-----------+--------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> DESCRIBE utilisateur;
++--------+--------------+------+-----+---------+----------------+
+| Field  | Type         | Null | Key | Default | Extra          |
++--------+--------------+------+-----+---------+----------------+
+| id     | int          | NO   | PRI | NULL    | auto_increment |
+| nom    | varchar(100) | YES  |     | NULL    |                |
+| prenom | varchar(100) | YES  |     | NULL    |                |
+| email  | varchar(255) | NO   | UNI | NULL    |                |
++--------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO "utilisateur" ("nom", "prenom", "email")
+    -> VALUES ("agu", "patrick", "patrickagu@gmail.com");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"utilisateur" ("nom", "prenom", "email")
+VALUES ("agu", "patrick", "patrickagu@g' at line 1
+mysql> INSERT INTO 'utilisateur' ('nom', 'prenom', 'email')
+    -> VALUES ('agu', 'patrick', 'patrickagu@gmail.com');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''utilisateur' ('nom', 'prenom', 'email')
+VALUES ('agu', 'patrick', 'patrickagu@g' at line 1
+mysql> INSERT INTO 'utilisateur' ('nom', 'prenom', 'email')
+    -> VALUES ('agu', 'patrick', 'patrick@gmail.com');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''utilisateur' ('nom', 'prenom', 'email')
+VALUES ('agu', 'patrick', 'patrick@gmai' at line 1
+mysql> INSERT INTO utilisateur (nom, prenom, email)
+    -> VALUES ('agu', 'patrick', 'patrick@gmail.com');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SELECT* FROM utilisateur;
++----+-------------+----------+----------------------+
+| id | nom         | prenom   | email                |
++----+-------------+----------+----------------------+
+|  1 | durantay    | quentin  | qentin@gmail.com     |
+|  2 | dupont      | marie    | marie@hotmail.fr     |
+|  3 | miller      | vincent  | vm@yahoo.com         |
+|  4 | zuckerberg  | marc     | marc@gmail.com       |
+|  5 | paul        | pierre   | pp@orange.fr         |
+|  6 | de vauclerc | lisa     | lisadv@gmail.com     |
+|  7 | gluntig     | éléonore | glunt@sfr.com        |
+|  8 | cavill      | henry    | henry@outlook.fr     |
+|  9 | hopper      | lionel   | hpp@gmail.com        |
+| 10 | tember      | fabienne | fabienne@yopmail.com |
+| 11 | agu         | patrick  | patrick@gmail.com    |
++----+-------------+----------+----------------------+
+11 rows in set (0.00 sec)
+
+mysql> INSERT INTO utilisateur (nom, prenom, email)
+    -> VALUES
+    -> ('munier', 'alexis', 'alexis@gmail.com'),
+    -> ('stilton', 'geronimo', 'geronimo@gmail.com');
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT* FROM utilisateur;
++----+-------------+----------+----------------------+
+| id | nom         | prenom   | email                |
++----+-------------+----------+----------------------+
+|  1 | durantay    | quentin  | qentin@gmail.com     |
+|  2 | dupont      | marie    | marie@hotmail.fr     |
+|  3 | miller      | vincent  | vm@yahoo.com         |
+|  4 | zuckerberg  | marc     | marc@gmail.com       |
+|  5 | paul        | pierre   | pp@orange.fr         |
+|  6 | de vauclerc | lisa     | lisadv@gmail.com     |
+|  7 | gluntig     | éléonore | glunt@sfr.com        |
+|  8 | cavill      | henry    | henry@outlook.fr     |
+|  9 | hopper      | lionel   | hpp@gmail.com        |
+| 10 | tember      | fabienne | fabienne@yopmail.com |
+| 11 | agu         | patrick  | patrick@gmail.com    |
+| 12 | munier      | alexis   | alexis@gmail.com     |
+| 13 | stilton     | geronimo | geronimo@gmail.com   |
++----+-------------+----------+----------------------+
+13 rows in set (0.00 sec)
+
+mysql> INSERT INTO aliment (nom, marque, sucre, calories, graisses, proteines, bio)
+    -> VALUES
+    -> ('poire', 'monoprix', 27.5, 134, 0.2, 1.1, FALSE),
+    -> ('pomme', 'monoprix', 19.1, 72, 0.2, 0.4, FALSE),
+    -> ('oeuf', 'carrefour', 0.6, 82, 5.8, 6.9, TRUE),
+    -> ('lait d\'amande', 'bjorg', 4.5, 59, 3.9, 1.1, TRUE);
+Query OK, 4 rows affected (0.02 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO aliment (nom, marque, sucre, calories, graisses, proteines, bio)
+    -> VALUES ('haricots verts', 'monoprix', 25, 3, 0, 1.7, FALSE);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SELECT nom, calories FROM aliment;
++-----------------+----------+
+| nom             | calories |
++-----------------+----------+
+| pomme           |       72 |
+| poire           |      134 |
+| banane          |      101 |
+| jambon          |       34 |
+| compote         |       51 |
+| steak haché     |       68 |
+| saumon          |      206 |
+| haricots verts  |       25 |
+| riz             |      130 |
+| pâtes completes |      353 |
+| blanc de dinde  |       98 |
+| filet de poulet |      121 |
+| muesli          |      170 |
+| café            |        0 |
+| jus d'orange    |       74 |
+| jus de pomme    |      100 |
+| pomme de terre  |      104 |
+| oeuf            |       74 |
+| baguette        |      185 |
+| lait d'amande   |       80 |
+| poire           |      134 |
+| pomme           |       72 |
+| oeuf            |       82 |
+| lait d'amande   |       59 |
+| haricots verts  |        3 |
++-----------------+----------+
+25 rows in set (0.00 sec)
+
+mysql> UPDATE utilisateur SET email = 'quentind@gmail.com' WHERE `id` = 1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT* FROM utilisateur WHERE id = 1;
++----+----------+---------+--------------------+
+| id | nom      | prenom  | email              |
++----+----------+---------+--------------------+
+|  1 | durantay | quentin | quentind@gmail.com |
++----+----------+---------+--------------------+
+1 row in set (0.00 sec)
+
+mysql> UPDATE utilisateur SET prenom = 'quentin';
+Query OK, 12 rows affected (0.01 sec)
+Rows matched: 13  Changed: 12  Warnings: 0
+
+mysql> SELECT* FROM utilisateur;
++----+-------------+---------+----------------------+
+| id | nom         | prenom  | email                |
++----+-------------+---------+----------------------+
+|  1 | durantay    | quentin | quentind@gmail.com   |
+|  2 | dupont      | quentin | marie@hotmail.fr     |
+|  3 | miller      | quentin | vm@yahoo.com         |
+|  4 | zuckerberg  | quentin | marc@gmail.com       |
+|  5 | paul        | quentin | pp@orange.fr         |
+|  6 | de vauclerc | quentin | lisadv@gmail.com     |
+|  7 | gluntig     | quentin | glunt@sfr.com        |
+|  8 | cavill      | quentin | henry@outlook.fr     |
+|  9 | hopper      | quentin | hpp@gmail.com        |
+| 10 | tember      | quentin | fabienne@yopmail.com |
+| 11 | agu         | quentin | patrick@gmail.com    |
+| 12 | munier      | quentin | alexis@gmail.com     |
+| 13 | stilton     | quentin | geronimo@gmail.com   |
++----+-------------+---------+----------------------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT* FROM aliment;
++----+-----------------+-------------+-------+----------+----------+-----------+------+
+| id | nom             | marque      | sucre | calories | graisses | proteines | bio  |
++----+-----------------+-------------+-------+----------+----------+-----------+------+
+|  1 | pomme           | sans marque |  19.1 |       72 |      0.2 |       0.4 |    0 |
+|  2 | poire           | sans marque |  27.5 |      134 |      0.2 |       1.1 |    1 |
+|  3 | banane          | chiquita    |    24 |      101 |      0.3 |       1.1 |    0 |
+|  4 | jambon          | herta       |   0.2 |       34 |      0.8 |       6.6 |    0 |
+|  5 | compote         | andros      |    11 |       51 |        0 |       0.5 |    0 |
+|  6 | steak haché     | charal      |   0.8 |       68 |      4.8 |       4.8 |    0 |
+|  7 | saumon          | guyader     |     0 |      206 |     12.3 |      22.1 |    0 |
+|  8 | haricots verts  | bonduelle   |   5.8 |       25 |      0.1 |       1.5 |    0 |
+|  9 | riz             | oncle benz  |  28.2 |      130 |      0.3 |       2.7 |    0 |
+| 10 | pâtes completes | barilla     |    64 |      353 |      2.7 |        14 |    1 |
+| 11 | blanc de dinde  | père dodu   |   0.6 |       98 |      0.9 |        22 |    0 |
+| 12 | filet de poulet | le gaulois  |     0 |      121 |      1.8 |      26.2 |    0 |
+| 13 | muesli          | bjorg       |  26.5 |      170 |        5 |       3.5 |    1 |
+| 14 | café            | carte noire |     0 |        0 |        0 |         0 |    0 |
+| 15 | jus d'orange    | innocent    |    16 |       74 |        0 |       1.6 |    0 |
+| 16 | jus de pomme    | andros      |    24 |      100 |      0.2 |       0.2 |    1 |
+| 17 | pomme de terre  | doréac      |  21.1 |      104 |      0.2 |       2.8 |    0 |
+| 18 | oeuf            | naturalia   |   0.4 |       74 |      5.1 |       6.5 |    1 |
+| 19 | baguette        | sans marque |  36.1 |      185 |      1.2 |       7.5 |    0 |
+| 20 | lait d'amande   | bjorg       |   6.1 |       80 |      5.3 |       1.5 |    1 |
+| 21 | poire           | monoprix    |  27.5 |      134 |      0.2 |       1.1 |    0 |
+| 22 | pomme           | monoprix    |  19.1 |       72 |      0.2 |       0.4 |    0 |
+| 23 | oeuf            | carrefour   |   0.6 |       82 |      5.8 |       6.9 |    1 |
+| 24 | lait d'amande   | bjorg       |   4.5 |       59 |      3.9 |       1.1 |    1 |
+| 25 | haricots verts  | monoprix    |    25 |        3 |        0 |       1.7 |    0 |
++----+-----------------+-------------+-------+----------+----------+-----------+------+
+25 rows in set (0.00 sec)
+
+mysql> UPDATE aliment SET nom = 'pomme golden' WHERE id = 1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT* FROM aliment;
++----+-----------------+-------------+-------+----------+----------+-----------+------+
+| id | nom             | marque      | sucre | calories | graisses | proteines | bio  |
++----+-----------------+-------------+-------+----------+----------+-----------+------+
+|  1 | pomme golden    | sans marque |  19.1 |       72 |      0.2 |       0.4 |    0 |
+|  2 | poire           | sans marque |  27.5 |      134 |      0.2 |       1.1 |    1 |
+|  3 | banane          | chiquita    |    24 |      101 |      0.3 |       1.1 |    0 |
+|  4 | jambon          | herta       |   0.2 |       34 |      0.8 |       6.6 |    0 |
+|  5 | compote         | andros      |    11 |       51 |        0 |       0.5 |    0 |
+|  6 | steak haché     | charal      |   0.8 |       68 |      4.8 |       4.8 |    0 |
+|  7 | saumon          | guyader     |     0 |      206 |     12.3 |      22.1 |    0 |
+|  8 | haricots verts  | bonduelle   |   5.8 |       25 |      0.1 |       1.5 |    0 |
+|  9 | riz             | oncle benz  |  28.2 |      130 |      0.3 |       2.7 |    0 |
+| 10 | pâtes completes | barilla     |    64 |      353 |      2.7 |        14 |    1 |
+| 11 | blanc de dinde  | père dodu   |   0.6 |       98 |      0.9 |        22 |    0 |
+| 12 | filet de poulet | le gaulois  |     0 |      121 |      1.8 |      26.2 |    0 |
+| 13 | muesli          | bjorg       |  26.5 |      170 |        5 |       3.5 |    1 |
+| 14 | café            | carte noire |     0 |        0 |        0 |         0 |    0 |
+| 15 | jus d'orange    | innocent    |    16 |       74 |        0 |       1.6 |    0 |
+| 16 | jus de pomme    | andros      |    24 |      100 |      0.2 |       0.2 |    1 |
+| 17 | pomme de terre  | doréac      |  21.1 |      104 |      0.2 |       2.8 |    0 |
+| 18 | oeuf            | naturalia   |   0.4 |       74 |      5.1 |       6.5 |    1 |
+| 19 | baguette        | sans marque |  36.1 |      185 |      1.2 |       7.5 |    0 |
+| 20 | lait d'amande   | bjorg       |   6.1 |       80 |      5.3 |       1.5 |    1 |
+| 21 | poire           | monoprix    |  27.5 |      134 |      0.2 |       1.1 |    0 |
+| 22 | pomme           | monoprix    |  19.1 |       72 |      0.2 |       0.4 |    0 |
+| 23 | oeuf            | carrefour   |   0.6 |       82 |      5.8 |       6.9 |    1 |
+| 24 | lait d'amande   | bjorg       |   4.5 |       59 |      3.9 |       1.1 |    1 |
+| 25 | haricots verts  | monoprix    |    25 |        3 |        0 |       1.7 |    0 |
++----+-----------------+-------------+-------+----------+----------+-----------+------+
+25 rows in set (0.00 sec)
+
+mysql> DELETE FROM aliment WHERE id = 1;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT* FROM aliment;
++----+-----------------+-------------+-------+----------+----------+-----------+------+
+| id | nom             | marque      | sucre | calories | graisses | proteines | bio  |
++----+-----------------+-------------+-------+----------+----------+-----------+------+
+|  2 | poire           | sans marque |  27.5 |      134 |      0.2 |       1.1 |    1 |
+|  3 | banane          | chiquita    |    24 |      101 |      0.3 |       1.1 |    0 |
+|  4 | jambon          | herta       |   0.2 |       34 |      0.8 |       6.6 |    0 |
+|  5 | compote         | andros      |    11 |       51 |        0 |       0.5 |    0 |
+|  6 | steak haché     | charal      |   0.8 |       68 |      4.8 |       4.8 |    0 |
+|  7 | saumon          | guyader     |     0 |      206 |     12.3 |      22.1 |    0 |
+|  8 | haricots verts  | bonduelle   |   5.8 |       25 |      0.1 |       1.5 |    0 |
+|  9 | riz             | oncle benz  |  28.2 |      130 |      0.3 |       2.7 |    0 |
+| 10 | pâtes completes | barilla     |    64 |      353 |      2.7 |        14 |    1 |
+| 11 | blanc de dinde  | père dodu   |   0.6 |       98 |      0.9 |        22 |    0 |
+| 12 | filet de poulet | le gaulois  |     0 |      121 |      1.8 |      26.2 |    0 |
+| 13 | muesli          | bjorg       |  26.5 |      170 |        5 |       3.5 |    1 |
+| 14 | café            | carte noire |     0 |        0 |        0 |         0 |    0 |
+| 15 | jus d'orange    | innocent    |    16 |       74 |        0 |       1.6 |    0 |
+| 16 | jus de pomme    | andros      |    24 |      100 |      0.2 |       0.2 |    1 |
+| 17 | pomme de terre  | doréac      |  21.1 |      104 |      0.2 |       2.8 |    0 |
+| 18 | oeuf            | naturalia   |   0.4 |       74 |      5.1 |       6.5 |    1 |
+| 19 | baguette        | sans marque |  36.1 |      185 |      1.2 |       7.5 |    0 |
+| 20 | lait d'amande   | bjorg       |   6.1 |       80 |      5.3 |       1.5 |    1 |
+| 21 | poire           | monoprix    |  27.5 |      134 |      0.2 |       1.1 |    0 |
+| 22 | pomme           | monoprix    |  19.1 |       72 |      0.2 |       0.4 |    0 |
+| 23 | oeuf            | carrefour   |   0.6 |       82 |      5.8 |       6.9 |    1 |
+| 24 | lait d'amande   | bjorg       |   4.5 |       59 |      3.9 |       1.1 |    1 |
+| 25 | haricots verts  | monoprix    |    25 |        3 |        0 |       1.7 |    0 |
++----+-----------------+-------------+-------+----------+----------+-----------+------+
+24 rows in set (0.00 sec)
+
+mysql> SHOW databases;
++--------------------+
+| Database           |
++--------------------+
+| foodly             |
+| information_schema |
+| mydatabase         |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| titanicdatabase    |
+| world              |
++--------------------+
+9 rows in set (0.01 sec)
+
+mysql> SHOW databases;
++--------------------+
+| Database           |
++--------------------+
+| foodly             |
+| information_schema |
+| moviz              |
+| mydatabase         |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| titanicdatabase    |
+| world              |
++--------------------+
+10 rows in set (0.00 sec)
+
+mysql> USE moviz;
+Database changed
+mysql> DROP TABLE IF EXISTS `film`;
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+mysql> CREATE TABLE `film` (
+    ->   `id` int NOT NULL AUTO_INCREMENT,
+    ->   `date_de_sortie` date DEFAULT NULL,
+    ->   `synopsis` text,
+    ->   `langue` varchar(255) DEFAULT NULL,
+    ->   `budget` int DEFAULT NULL,
+    ->   `nom` varchar(255) NOT NULL,
+    ->   PRIMARY KEY (`id`)
+    -> ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> LOCK TABLES `film` WRITE;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> INSERT INTO `film` VALUES (1,'1998-04-04','L\'histoire du plus grand paquebot de son époque, et de sa funeste fin.','anglais',200000000,'Titanic',4),(2,'2012-10-26','Dans cet épisode le plus sombre de la saga, James Bond retourne à ses origines.','anglais',200000000,'Skyfall',5),(3,'2017-01-25','Une histoire d\'amour à Los Angeles sous forme de comédie musicale.','anglais',30000000,'La La Land',3);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO `film` VALUES (1,'1998-04-04','L\'histoire du plus grand paquebot de son époque, et de sa funeste fin.','anglais',200000000,'Titanic',4),(2,'2012-10-26','Dans cet épisode le plus sombre de la saga, James Bond retourne à ses origines.','anglais',200000000,'Skyfall',5),(3,'2017-01-25','Une histoire d\'amour à Los Angeles sous forme de comédie musicale.','anglais',30000000,'La La Land',3);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO film VALUES (1,'1998-04-04','L\'histoire du plus grand paquebot de son époque, et de sa funeste fin.','anglais',200000000,'Titanic',4),(2,'2012-10-26','Dans cet épisode le plus sombre de la saga, James Bond retourne à ses origines.','anglais',200000000,'Skyfall',5),(3,'2017-01-25','Une histoire d\'amour à Los Angeles sous forme de comédiemusicale.','anglais',30000000,'La La Land',3);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO film VALUES (nom, date de sortie, budget, synopsis, langue)
+    -> VALUES ('titanic', '04-04-1998', 200000000, 'L'histoire du plus grand paquebot de son époque, et de sa funeste fin.', 'anglais')
+    '> VALUES ('skyfall', '26-10-2012', 200000000, 'Dans cet épisode le plus sombre de la saga, James Bond retourne à ses origines.', 'anglais');
+    '>
+    '> USE foodly;
+    '> SHOW databases;
+    '> USE foodly;
+    '> EXIT;
+    '> CLEAR.
+    '> CLEAR;
+    '> CLEAN;
+    '> SHOW databases;
+    '> SHOW databases;
+    '> EXIT;
+    '> USE foodly;
+    '> SHOW databases;
+    '> ^C
+mysql> SHOW databases;
++--------------------+
+| Database           |
++--------------------+
+| foodly             |
+| information_schema |
+| moviz              |
+| mydatabase         |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| titanicdatabase    |
+| world              |
++--------------------+
+10 rows in set (0.00 sec)
+
+mysql> USE foodly;
+Database changed
+mysql> SOURCE C:\Users\berlu\OneDrive\Desktop\DIA\foodly;
+ERROR:
+Unknown command '\U'.
+ERROR:
+Unknown command '\b'.
+ERROR:
+Unknown command '\O'.
+ERROR:
+Unknown command '\D'.
+ERROR:
+Unknown command '\D'.
+ERROR:
+Unknown command '\f'.
+ERROR:
+Failed to open file 'C:\Users\berlu\OneDrive\Desktop\DIA\foodly', error: 2
+mysql> SOURCE C:\Users\berlu\Downloads\foodly.sql
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+ERROR 1100 (HY000): Table 'aliment' was not locked with LOCK TABLES
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+ERROR 1100 (HY000): Table 'aliment' was not locked with LOCK TABLES
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+ERROR 1062 (23000): Duplicate entry '2' for key 'aliment.PRIMARY'
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.04 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+Query OK, 0 rows affected (0.01 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.03 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.07 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 10 rows affected (0.01 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+Query OK, 0 rows affected (0.01 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.06 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 29 rows affected (0.01 sec)
+Records: 29  Duplicates: 0  Warnings: 0
+
+Query OK, 0 rows affected (0.01 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> use foodly;
+Database changed
+mysql> select* foodly;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foodly' at line 1
+mysql> SELECT * FROM utilisateur WHERE email LIKE "%gmail.com";
++----+-------------+---------+------------------+-----------+
+| id | nom         | prenom  | email            | langue_id |
++----+-------------+---------+------------------+-----------+
+|  1 | durantay    | quentin | qentin@gmail.com |         1 |
+|  4 | zuckerberg  | marc    | marc@gmail.com   |         2 |
+|  6 | de vauclerc | lisa    | lisadv@gmail.com |         1 |
+|  9 | hopper      | lionel  | hpp@gmail.com    |         2 |
++----+-------------+---------+------------------+-----------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT*
+    -> FROM aliment
+    -> WHERE bio = no
+    -> ORDER BY protein DESC;
+ERROR 1054 (42S22): Unknown column 'no' in 'where clause'
+mysql> SHOW aliment;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'aliment' at line 1
+mysql> SELECT* FROM aliment*;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*' at line 1
+mysql> SHOW tables;
++-----------------------+
+| Tables_in_foodly      |
++-----------------------+
+| aliment               |
+| langue                |
+| utilisateur           |
+| utilisateur_aliment   |
+| utilisateurs_gmail_vw |
++-----------------------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT* FROM aliment;
++----+-----------------+-------------+-------+----------+----------+-----------+------+
+| id | nom             | marque      | sucre | calories | graisses | proteines | bio  |
++----+-----------------+-------------+-------+----------+----------+-----------+------+
+|  2 | poire           | sans marque |  27.5 |      134 |      0.2 |       1.1 |    1 |
+|  3 | banane          | chiquita    |    24 |      101 |      0.3 |       1.1 |    0 |
+|  4 | jambon          | herta       |   0.2 |       34 |      0.8 |       6.6 |    0 |
+|  5 | compote         | andros      |    11 |       51 |        0 |       0.5 |    0 |
+|  6 | steak haché     | charal      |   0.8 |       68 |      4.8 |       4.8 |    0 |
+|  7 | saumon          | guyader     |     0 |      206 |     12.3 |      22.1 |    0 |
+|  8 | haricots verts  | bonduelle   |   5.8 |       25 |      0.1 |       1.5 |    0 |
+|  9 | riz             | oncle benz  |  28.2 |      130 |      0.3 |       2.7 |    0 |
+| 10 | pâtes completes | barilla     |    64 |      353 |      2.7 |        14 |    1 |
+| 11 | blanc de dinde  | père dodu   |   0.6 |       98 |      0.9 |        22 |    0 |
+| 12 | filet de poulet | le gaulois  |     0 |      121 |      1.8 |      26.2 |    0 |
+| 13 | muesli          | bjorg       |  26.5 |      170 |        5 |       3.5 |    1 |
+| 14 | café            | carte noire |     0 |        0 |        0 |         0 |    0 |
+| 15 | jus d'orange    | innocent    |    16 |       74 |        0 |       1.6 |    0 |
+| 16 | jus de pomme    | andros      |    24 |      100 |      0.2 |       0.2 |    1 |
+| 17 | pomme de terre  | doréac      |  21.1 |      104 |      0.2 |       2.8 |    0 |
+| 18 | oeuf            | naturalia   |   0.4 |       74 |      5.1 |       6.5 |    1 |
+| 19 | baguette        | sans marque |  36.1 |      185 |      1.2 |       7.5 |    0 |
+| 20 | lait d'amande   | bjorg       |   6.1 |       80 |      5.3 |       1.5 |    1 |
+| 21 | poire           | monoprix    |  27.5 |      134 |      0.2 |       1.1 |    0 |
+| 22 | pomme           | monoprix    |  19.1 |       72 |      0.2 |       0.4 |    0 |
+| 23 | oeuf            | carrefour   |   0.6 |       82 |      5.8 |       6.9 |    1 |
+| 24 | lait d'amande   | bjorg       |   4.5 |       59 |      3.9 |       1.1 |    1 |
+| 25 | haricots verts  | monoprix    |    25 |        3 |        0 |       1.7 |    0 |
++----+-----------------+-------------+-------+----------+----------+-----------+------+
+24 rows in set (0.00 sec)
+
+mysql> SELECT*
+    -> FROM aliment
+    -> WHERE bio = 0
+    -> ORDER BY proteines DESC;
++----+-----------------+-------------+-------+----------+----------+-----------+------+
+| id | nom             | marque      | sucre | calories | graisses | proteines | bio  |
++----+-----------------+-------------+-------+----------+----------+-----------+------+
+| 12 | filet de poulet | le gaulois  |     0 |      121 |      1.8 |      26.2 |    0 |
+|  7 | saumon          | guyader     |     0 |      206 |     12.3 |      22.1 |    0 |
+| 11 | blanc de dinde  | père dodu   |   0.6 |       98 |      0.9 |        22 |    0 |
+| 19 | baguette        | sans marque |  36.1 |      185 |      1.2 |       7.5 |    0 |
+|  4 | jambon          | herta       |   0.2 |       34 |      0.8 |       6.6 |    0 |
+|  6 | steak haché     | charal      |   0.8 |       68 |      4.8 |       4.8 |    0 |
+| 17 | pomme de terre  | doréac      |  21.1 |      104 |      0.2 |       2.8 |    0 |
+|  9 | riz             | oncle benz  |  28.2 |      130 |      0.3 |       2.7 |    0 |
+| 25 | haricots verts  | monoprix    |    25 |        3 |        0 |       1.7 |    0 |
+| 15 | jus d'orange    | innocent    |    16 |       74 |        0 |       1.6 |    0 |
+|  8 | haricots verts  | bonduelle   |   5.8 |       25 |      0.1 |       1.5 |    0 |
+|  3 | banane          | chiquita    |    24 |      101 |      0.3 |       1.1 |    0 |
+| 21 | poire           | monoprix    |  27.5 |      134 |      0.2 |       1.1 |    0 |
+|  5 | compote         | andros      |    11 |       51 |        0 |       0.5 |    0 |
+| 22 | pomme           | monoprix    |  19.1 |       72 |      0.2 |       0.4 |    0 |
+| 14 | café            | carte noire |     0 |        0 |        0 |         0 |    0 |
++----+-----------------+-------------+-------+----------+----------+-----------+------+
+16 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(*)
+    -> FROM utilisateur
+    -> WHERE email LIKE "%gmail.com";
++----------+
+| COUNT(*) |
++----------+
+|        4 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(email)
+    -> FROM utilisateur
+    -> WHERE email LIKE "%gmail.com";
++--------------+
+| COUNT(email) |
++--------------+
+|            4 |
++--------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT *
+    -> FROM aliment
+    -> WHERE nom like "%pomme%";
++----+----------------+----------+-------+----------+----------+-----------+------+
+| id | nom            | marque   | sucre | calories | graisses | proteines | bio  |
++----+----------------+----------+-------+----------+----------+-----------+------+
+| 16 | jus de pomme   | andros   |    24 |      100 |      0.2 |       0.2 |    1 |
+| 17 | pomme de terre | doréac   |  21.1 |      104 |      0.2 |       2.8 |    0 |
+| 22 | pomme          | monoprix |  19.1 |       72 |      0.2 |       0.4 |    0 |
++----+----------------+----------+-------+----------+----------+-----------+------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(nom)
+    -> FROM aliment
+    -> WHERE nom LIKE "%pomme%";
++------------+
+| COUNT(nom) |
++------------+
+|          3 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(DISTINCT nom)
+    -> FROM aliment
+    -> WHERE nom LIKE "%pomme%";
++---------------------+
+| COUNT(DISTINCT nom) |
++---------------------+
+|                   3 |
++---------------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT COUNT(DISTINCT nom)  AS "produits différents contenant le mot pomme"
+    -> FROM aliment
+    -> WHERE nom LIKE "%pomme%";
++--------------------------------------------+
+| produits différents contenant le mot pomme |
++--------------------------------------------+
+|                                          3 |
++--------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MAX(sucre)  AS "taux de sucre maximum"
+    -> FROM aliment;
++-----------------------+
+| taux de sucre maximum |
++-----------------------+
+|                    64 |
++-----------------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT AVG(calories) AS "calories moyennes des aliments > 30g"
+    -> FROM aliment
+    -> WHERE calories > 30;
++--------------------------------------+
+| calories moyennes des aliments > 30g |
++--------------------------------------+
+|                             115.7143 |
++--------------------------------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT ROUND(AVG(calories)) AS "calories moyennes des aliments > 30g"
+    -> FROM aliment
+    -> WHERE calories > 30;
++--------------------------------------+
+| calories moyennes des aliments > 30g |
++--------------------------------------+
+|                                  116 |
++--------------------------------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT ROUND(AVG(calories)) AS "calories moyennes des aliments > 30g"
+    -> FROM aliment
+    -> WHERE calories > 30;
++--------------------------------------+
+| calories moyennes des aliments > 30g |
++--------------------------------------+
+|                                  116 |
++--------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM utilisateurs_gmail_vw
+    -> WHERE prenom LIKE "%m%";
++----+------------+--------+----------------+-----------+
+| id | nom        | prenom | email          | langue_id |
++----+------------+--------+----------------+-----------+
+|  4 | zuckerberg | marc   | marc@gmail.com |         2 |
++----+------------+--------+----------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> CREATE VIEW aliment_non_bio_prot_desc_vw AS
+    -> (  SELECT*
+    ->     -> FROM aliment
+    ->     -> WHERE bio = 0
+    ->     -> ORDER BY proteines DESC
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-> FROM aliment
+    -> WHERE bio = 0
+    -> ORDER BY proteines DESC
+)' at line 3
+mysql> CREATE VIEW aliment_non_bio_prot_desc_vw AS
+    -> SELECT *
+    -> FROM aliment
+    -> WHERE bio = 0
+    -> ORDER BY proteines DESC;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> SELECT* FROM aliment_non_bio_prot_desc;
+ERROR 1146 (42S02): Table 'foodly.aliment_non_bio_prot_desc' doesn't exist
+mysql> SELECT* FROM aliment_non_bio_prot_desc_vw;
++----+-----------------+-------------+-------+----------+----------+-----------+------+
+| id | nom             | marque      | sucre | calories | graisses | proteines | bio  |
++----+-----------------+-------------+-------+----------+----------+-----------+------+
+| 12 | filet de poulet | le gaulois  |     0 |      121 |      1.8 |      26.2 |    0 |
+|  7 | saumon          | guyader     |     0 |      206 |     12.3 |      22.1 |    0 |
+| 11 | blanc de dinde  | père dodu   |   0.6 |       98 |      0.9 |        22 |    0 |
+| 19 | baguette        | sans marque |  36.1 |      185 |      1.2 |       7.5 |    0 |
+|  4 | jambon          | herta       |   0.2 |       34 |      0.8 |       6.6 |    0 |
+|  6 | steak haché     | charal      |   0.8 |       68 |      4.8 |       4.8 |    0 |
+| 17 | pomme de terre  | doréac      |  21.1 |      104 |      0.2 |       2.8 |    0 |
+|  9 | riz             | oncle benz  |  28.2 |      130 |      0.3 |       2.7 |    0 |
+| 25 | haricots verts  | monoprix    |    25 |        3 |        0 |       1.7 |    0 |
+| 15 | jus d'orange    | innocent    |    16 |       74 |        0 |       1.6 |    0 |
+|  8 | haricots verts  | bonduelle   |   5.8 |       25 |      0.1 |       1.5 |    0 |
+|  3 | banane          | chiquita    |    24 |      101 |      0.3 |       1.1 |    0 |
+| 21 | poire           | monoprix    |  27.5 |      134 |      0.2 |       1.1 |    0 |
+|  5 | compote         | andros      |    11 |       51 |        0 |       0.5 |    0 |
+| 22 | pomme           | monoprix    |  19.1 |       72 |      0.2 |       0.4 |    0 |
+| 14 | café            | carte noire |     0 |        0 |        0 |         0 |    0 |
++----+-----------------+-------------+-------+----------+----------+-----------+------+
+16 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM utilisateur
+    -> JOIN langue
+    -> ON utilisateur.langue_id = langue.id;
++----+-------------+----------+----------------------+-----------+----+----------+
+| id | nom         | prenom   | email                | langue_id | id | nom      |
++----+-------------+----------+----------------------+-----------+----+----------+
+|  1 | durantay    | quentin  | qentin@gmail.com     |         1 |  1 | français |
+|  2 | dupont      | marie    | marie@hotmail.fr     |         1 |  1 | français |
+|  5 | paul        | pierre   | pp@orange.fr         |         1 |  1 | français |
+|  6 | de vauclerc | lisa     | lisadv@gmail.com     |         1 |  1 | français |
+|  7 | gluntig     | éléonore | glunt@sfr.com        |         1 |  1 | français |
+| 10 | tember      | fabienne | fabienne@yopmail.com |         1 |  1 | français |
+|  3 | miller      | vincent  | vm@yahoo.com         |         2 |  2 | anglais  |
+|  4 | zuckerberg  | marc     | marc@gmail.com       |         2 |  2 | anglais  |
+|  8 | cavill      | henry    | henry@outlook.fr     |         2 |  2 | anglais  |
+|  9 | hopper      | lionel   | hpp@gmail.com        |         2 |  2 | anglais  |
++----+-------------+----------+----------------------+-----------+----+----------+
+10 rows in set (0.01 sec)
+
+mysql> SELECT * FROM `utilisateur`
+    -> JOIN `langue`
+    -> ON `utilisateur`.`langue_id` = `langue`.`id`
+    -> WHERE (`utilisateur.email` LIKE "%gmail%") AND (`langue.id`=1) ;
+ERROR 1054 (42S22): Unknown column 'utilisateur.email' in 'where clause'
+mysql> SELECT * FROM `utilisateur`
+    -> JOIN `langue`
+    -> ON `utilisateur`.`langue_id` = `langue`.`id`
+    -> WHERE (`utilisateur.email` LIKE "%gmail%") AND (`langue.id`=1);
+ERROR 1054 (42S22): Unknown column 'utilisateur.email' in 'where clause'
+mysql> SELECT utilisateur.id
+    ->
+    -> ^C
+mysql> SELECT utilisateur.nom
+    -> JOINT langue
+    -> ON utilisateur.langue_id = langue.id
+    -> ^C
+mysql> SELECT utilisateur.nom = français
+    -> JOIN langue
+    -> ON utilisateur.langue_id = langue.id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'JOIN langue
+ON utilisateur.langue_id = langue.id' at line 2
+mysql> SELECT utilisateur.nom = 'français'
+    -> JOIN langue
+    -> ON utilisateur.langue_id = langue.id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'JOIN langue
+ON utilisateur.langue_id = langue.id' at line 2
+mysql> SELECT utilisateur.nom
+    -> FROM utilisateur
+    -> JOIN langue ON utilisateur.langue_id = langue.id
+    -> WHERE utilisateur.nom = 'français';
+Empty set (0.00 sec)
+
+mysql> SELECT utilisateur.nom
+    -> FROM utilisateur
+    -> JOIN langue ON utilisateur.langue_id = langue.id
+    -> WHERE utilisateur.langue = 'français';
+ERROR 1054 (42S22): Unknown column 'utilisateur.langue' in 'where clause'
+mysql> SELECT* FROM utilisateur;
++----+-------------+----------+----------------------+-----------+
+| id | nom         | prenom   | email                | langue_id |
++----+-------------+----------+----------------------+-----------+
+|  1 | durantay    | quentin  | qentin@gmail.com     |         1 |
+|  2 | dupont      | marie    | marie@hotmail.fr     |         1 |
+|  3 | miller      | vincent  | vm@yahoo.com         |         2 |
+|  4 | zuckerberg  | marc     | marc@gmail.com       |         2 |
+|  5 | paul        | pierre   | pp@orange.fr         |         1 |
+|  6 | de vauclerc | lisa     | lisadv@gmail.com     |         1 |
+|  7 | gluntig     | éléonore | glunt@sfr.com        |         1 |
+|  8 | cavill      | henry    | henry@outlook.fr     |         2 |
+|  9 | hopper      | lionel   | hpp@gmail.com        |         2 |
+| 10 | tember      | fabienne | fabienne@yopmail.com |         1 |
++----+-------------+----------+----------------------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT utilisateur.nom
+    -> FROM utilisateur
+    -> JOIN langue ON utilisateur.langue_id = langue.id
+    -> WHERE utilisateur.langue_id = 1;
++-------------+
+| nom         |
++-------------+
+| durantay    |
+| dupont      |
+| paul        |
+| de vauclerc |
+| gluntig     |
+| tember      |
++-------------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT*
+    -> FROM utilisateur
+    -> JOIN langue ON utilisateur.langue_id = langue.id
+    -> WHERE langue.nom = 'français';
++----+-------------+----------+----------------------+-----------+----+----------+
+| id | nom         | prenom   | email                | langue_id | id | nom      |
++----+-------------+----------+----------------------+-----------+----+----------+
+|  1 | durantay    | quentin  | qentin@gmail.com     |         1 |  1 | français |
+|  2 | dupont      | marie    | marie@hotmail.fr     |         1 |  1 | français |
+|  5 | paul        | pierre   | pp@orange.fr         |         1 |  1 | français |
+|  6 | de vauclerc | lisa     | lisadv@gmail.com     |         1 |  1 | français |
+|  7 | gluntig     | éléonore | glunt@sfr.com        |         1 |  1 | français |
+| 10 | tember      | fabienne | fabienne@yopmail.com |         1 |  1 | français |
++----+-------------+----------+----------------------+-----------+----+----------+
+6 rows in set (0.00 sec)
+
+mysql>
