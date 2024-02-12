@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<link rel ="stylesheet" type="text/css"
+href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<h1 > {{ message_bienvenue }}</h1>
+<a href="{{ url_for('suite') }}"> Vers la page 2 </a>
+</body>
+</html>
+• Recopier le code html ci-dessous et enregistrer le fichier dans le répertoire templates sous
+le nom page2.html
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<link rel ="stylesheet" type="text/css"
+href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<h1 > Vous êtes sur la deuxième page </h1>
+<a href="{{ url_for('hello') }}"> Vers la page d'accueil </a>
+</body>
+</html>
