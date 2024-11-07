@@ -1,0 +1,15 @@
+artifact_uri: file:///home/patrick/projets_data/Testing%20%26%20Monitoring/mlruns/0/9f5c9f6383084018b0aac49eed033f2c/artifacts
+end_time: 1730969698457
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 9f5c9f6383084018b0aac49eed033f2c
+run_name: RandomForest
+run_uuid: 9f5c9f6383084018b0aac49eed033f2c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1730969698420
+status: 3
+tags: []
+user_id: patrick
